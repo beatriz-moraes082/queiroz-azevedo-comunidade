@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Comunidade de Corretores · Queiroz Azevedo Empreendimentos</title>
+<meta name="description" content="Espaço restrito para corretores que querem estar dentro da Rota Ecológica de Alagoas antes de todo mundo. Pré-inscrição com vagas contadas." />
+
+<!-- ============================================================
+     FONTES — Cascadia Mono (entregue na pasta /cascadia_mono)
+     ============================================================ -->
+<style>
+  @font-face{
+    font-family:'Cascadia Mono';
+    src:url('cascadia_mono/CascadiaMono-ExtraLight.ttf') format('truetype');
+    font-weight:200; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:'Cascadia Mono';
+    src:url('cascadia_mono/CascadiaMono-Light.ttf') format('truetype');
+    font-weight:300; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:'Cascadia Mono';
+    src:url('cascadia_mono/CascadiaMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:'Cascadia Mono';
+    src:url('cascadia_mono/CascadiaMono-Italic.ttf') format('truetype');
+    font-weight:300; font-style:italic; font-display:swap;
+  }
+
+  /* ============================================================
+     TOKENS DE MARCA
+     ============================================================ */
+  :root{
+    --deep:        #07232a;   /* azul-oceano profundo  */
+    --ink:         #0c333b;   /* base de seções        */
+    --sea:         #14454f;   /* teal médio            */
+    --sea-2:       #1d5560;   /* teal claro            */
+    --foam:        #2f7180;   /* destaque frio         */
+    --paper:       #f4f2ea;   /* branco quente (texto) */
+    --muted:       rgba(244,242,234,.62);
+    --faint:       rgba(244,242,234,.30);
+    --line:        rgba(244,242,234,.14);
+    --orange:      #e2662c;   /* laranja da marca      */
+    --orange-soft: #ef8b56;
+    --track:       0.34em;    /* espaçamento de letras */
+    --maxw:        980px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Cascadia Mono', ui-monospace, monospace;
+    font-weight:300;
+    background:var(--deep);
+    color:var(--paper);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--orange); color:#fff; }
+  a{ color:inherit; text-decoration:none; }
+
+  /* textura de grão sobre tudo */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============================================================
+     UTILITÁRIOS
+     ============================================================ */
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; width:100%; }
+  .eyebrow{
+    font-size:11px; font-weight:300; letter-spacing:var(--track);
+    text-transform:uppercase; color:rgba(244,242,234,.82);
+    display:flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{ content:""; width:26px; height:1px; background:rgba(244,242,234,.5); }
+  .dot{ color:var(--orange); }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* labels verticais nas laterais */
+  .vlabel{
+    position:absolute; top:50%; writing-mode:vertical-rl;
+    font-size:10px; letter-spacing:.46em; text-transform:uppercase;
+    color:var(--faint); user-select:none; pointer-events:none;
+  }
+  .vlabel.l{ left:18px; transform:translateY(-50%) rotate(180deg); }
+  .vlabel.r{ right:18px; transform:translateY(-50%); }
+
+  /* ============================================================
+     LOGO (marca recriada em SVG — substitua pelo arquivo oficial)
+     ============================================================ */
+  .logo{ display:inline-flex; align-items:center; gap:13px; }
+  .logo svg{ width:42px; height:38px; flex:none; }
+  .logo .wm{ line-height:.98; }
+  .logo .wm b{ display:block; font-weight:700; font-size:15px; letter-spacing:.16em; }
+  .logo .wm span{ display:block; font-weight:300; font-size:7.5px; letter-spacing:.5em; color:var(--muted); margin-top:3px; }
+
+  /* logo oficial (imagem) */
+  .logo-official{ display:inline-block; line-height:0; }
+  .logo-official img{ display:block; height:auto; }
+  .hero-logo img{ width:170px; }
+  .film-logo img{ width:150px; }
+  .footer-logo img{ width:128px; }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{
+    position:relative; min-height:100vh; min-height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:120px 0 80px; text-align:center; overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    /* camadas (de cima p/ baixo): véu p/ legibilidade · FOTO · degradê de fallback.
+       Se imagens/hero.jpg não existir, a foto some e o degradê aparece. */
+    background:
+      linear-gradient(180deg, rgba(7,35,42,.45), rgba(7,35,42,.72)),
+      url('imagens/hero.jpg') center/cover no-repeat,
+      radial-gradient(120% 80% at 50% -10%, #2a6675 0%, #14454f 38%, #0a2c34 70%, #07232a 100%);
+  }
+  /* faixa de "horizonte / espuma" inferior */
+  .hero-bg::before{
+    content:""; position:absolute; left:-10%; right:-10%; bottom:-6%;
+    height:46%; opacity:.5;
+    background:
+      radial-gradient(60% 100% at 30% 100%, rgba(108,168,176,.55), transparent 60%),
+      radial-gradient(70% 100% at 80% 100%, rgba(76,140,150,.45), transparent 62%);
+    filter:blur(6px);
+  }
+  /* brilho de sol na água */
+  .hero-bg::after{
+    content:""; position:absolute; inset:0; opacity:.35;
+    background:repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 9px);
+    mix-blend-mode:overlay;
+  }
+  /* vídeo de fundo da 1ª dobra */
+  .hero-video{
+    position:absolute; inset:0; z-index:1;
+    width:100%; height:100%; object-fit:cover;
+  }
+  .hero-veil{
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(7,35,42,.42) 0%, rgba(7,35,42,.40) 45%, rgba(7,35,42,.74) 100%);
+  }
+  .hero .wrap{ position:relative; z-index:2; }
+  .hero .logo, .hero-logo{ margin:0 auto 40px; }
+
+  .hero h1{
+    font-weight:300; font-size:clamp(26px, 4.6vw, 46px); line-height:1.28;
+    max-width:18ch; margin:0 auto; letter-spacing:.01em;
+  }
+  .hero h1 b{ font-weight:700; color:#fff; }
+  .hero h1 .o{ color:var(--orange-soft); font-weight:700; }
+  .hero .sub{
+    margin:0 auto; max-width:24ch; color:var(--paper);
+    font-weight:300; font-size:clamp(24px,3.8vw,40px); line-height:1.3; letter-spacing:.01em;
+  }
+  .hero .sub b{ color:#fff; font-weight:700; }
+  .hero .sub .o{ color:var(--orange-soft); font-weight:700; }
+
+  /* botão */
+  .cta{
+    display:inline-flex; align-items:center; gap:12px;
+    margin-top:46px; padding:17px 30px;
+    background:var(--orange); color:#fff; font-weight:700;
+    font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    border:none; cursor:pointer; transition:transform .25s ease, background .25s ease;
+  }
+  .cta:hover{ background:#cf551f; transform:translateY(-2px); }
+  .cta svg{ width:15px; height:15px; }
+
+  .scrollhint{
+    position:absolute; left:50%; bottom:26px; transform:translateX(-50%);
+    z-index:2; font-size:10px; letter-spacing:.4em; text-transform:uppercase;
+    color:var(--faint); display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .scrollhint i{ display:block; width:1px; height:34px; background:linear-gradient(var(--faint), transparent); animation:drop 2.2s infinite; }
+  @keyframes drop{ 0%{transform:scaleY(0);transform-origin:top} 45%{transform:scaleY(1);transform-origin:top} 55%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+  /* ============================================================
+     SEÇÃO: VÍDEO
+     ============================================================ */
+  .film{
+    position:relative; padding:110px 0;
+    background:linear-gradient(180deg, #07232a 0%, #0a2c34 100%);
+  }
+  .film .head{ text-align:center; margin-bottom:54px; }
+  .film .head .eyebrow{ justify-content:center; margin-bottom:22px; }
+  .film .head h2{ font-weight:300; font-size:clamp(20px,3vw,30px); letter-spacing:.04em; }
+  .film .head h2 b{ font-weight:700; }
+  .film-logo{ margin-top:6px; }
+  .film-logo svg{ width:54px; height:48px; }
+  .film-logo .wm b{ font-size:18px; }
+  .film-logo .wm span{ font-size:9px; }
+  .videobox{
+    position:relative; max-width:880px; margin:0 auto; aspect-ratio:16/9;
+    border:1px solid var(--line); overflow:hidden; background:#04181d; cursor:pointer;
+  }
+  .videobox img{ width:100%; height:100%; object-fit:cover; opacity:.78; transition:opacity .4s ease, transform .6s ease; }
+  .videobox:hover img{ opacity:.6; transform:scale(1.03); }
+  .videobox iframe{ width:100%; height:100%; border:0; display:block; }
+  .videobox .play{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none;
+  }
+  .videobox .play i{
+    width:78px; height:78px; border:1px solid rgba(244,242,234,.8); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; background:rgba(7,35,42,.35);
+    backdrop-filter:blur(2px); transition:background .3s ease, transform .3s ease;
+  }
+  .videobox:hover .play i{ background:var(--orange); border-color:var(--orange); transform:scale(1.06); }
+  .videobox .play svg{ width:26px; height:26px; margin-left:4px; }
+
+  /* ============================================================
+     SEÇÃO: O QUE VOCÊ RECEBE
+     ============================================================ */
+  .offer{
+    position:relative; padding:110px 0;
+    background:
+      linear-gradient(180deg, rgba(7,35,42,.86), rgba(10,44,52,.92)),
+      url('imagens/projeto.jpg') center/cover no-repeat,
+      linear-gradient(180deg, #07232a 0%, #0c333b 55%, #0a2c34 100%);
+  }
+  .offer .head{ text-align:center; margin-bottom:64px; }
+  .offer .head .eyebrow{ justify-content:center; margin-bottom:22px; }
+  .offer .head h2{
+    font-weight:300; font-size:clamp(20px,3vw,30px); letter-spacing:.04em;
+  }
+  .offer .head h2 b{ font-weight:700; }
+
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .card{ background:var(--ink); padding:42px 32px; min-height:240px; display:flex; flex-direction:column; transition:background .35s ease; }
+  .card:hover{ background:#10404a; }
+  .card .num{ font-size:12px; letter-spacing:.3em; color:var(--orange); margin-bottom:auto; }
+  .card h3{ font-weight:700; font-size:16px; letter-spacing:.12em; text-transform:uppercase; line-height:1.5; margin:34px 0 12px; }
+  .card p{ font-size:13.5px; color:var(--muted); }
+
+  /* ============================================================
+     SEÇÃO: COMO FUNCIONA / RESTRITO
+     ============================================================ */
+  .how{
+    position:relative; padding:120px 0; overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(8,40,47,.80), rgba(7,35,42,.90)),
+      url('imagens/mar.jpg') center/cover no-repeat,
+      radial-gradient(120% 90% at 50% 0%, #1a5560 0%, #0e3a43 55%, #07232a 100%);
+  }
+  .how .head{ text-align:center; max-width:54ch; margin:0 auto 70px; }
+  .how .head h2{ font-weight:300; font-size:clamp(22px,3.4vw,34px); letter-spacing:.06em; line-height:1.35; text-transform:uppercase; }
+  .how .head h2 b{ font-weight:700; }
+  .how .head p{ margin-top:24px; color:var(--muted); font-size:15px; }
+
+  .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; counter-reset:s; }
+  .step{ position:relative; padding-top:30px; border-top:1px solid var(--line); }
+  .step .n{ font-weight:700; font-size:13px; letter-spacing:.3em; color:var(--orange); }
+  .step h4{ font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase; margin:18px 0 10px; }
+  .step p{ color:var(--muted); font-size:13.5px; }
+
+  .scarcity{
+    margin-top:70px; text-align:center; font-size:12px; letter-spacing:.34em;
+    text-transform:uppercase; color:var(--orange-soft);
+  }
+  .scarcity b{ color:#fff; }
+
+  /* ============================================================
+     SEÇÃO: FORMULÁRIO
+     ============================================================ */
+  .apply{ position:relative; padding:120px 0 0; background:linear-gradient(180deg,#07232a,#061d23); }
+  .apply .head{ text-align:center; margin-bottom:54px; }
+  .apply .head .eyebrow{ justify-content:center; margin-bottom:22px; }
+  .apply .head h2{ font-weight:300; font-size:clamp(22px,3.2vw,32px); letter-spacing:.04em; }
+  .apply .head h2 b{ font-weight:700; }
+  .apply .head p{ margin-top:18px; color:var(--muted); font-size:14px; max-width:46ch; margin-inline:auto; }
+
+  form{ max-width:640px; margin:0 auto; }
+  .field{ margin-bottom:26px; }
+  .field label{ display:block; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); margin-bottom:11px; }
+  .field label .req{ color:var(--orange); }
+  .field input, .field select, .field textarea{
+    width:100%; background:transparent; border:1px solid var(--line);
+    color:var(--paper); font-family:inherit; font-size:15px; font-weight:300;
+    padding:15px 16px; transition:border-color .25s ease, background .25s ease;
+  }
+  .field textarea{ resize:vertical; min-height:96px; }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none; border-color:var(--orange); background:rgba(226,102,44,.05);
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--faint); }
+  .field select{ appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23e2662c' stroke-width='1.6'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:42px; }
+  .field select option{ background:#0c333b; color:var(--paper); }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+  .consent{ display:flex; gap:12px; align-items:flex-start; font-size:12px; color:var(--muted); margin:6px 0 30px; }
+  .consent input{ width:16px; height:16px; margin-top:3px; accent-color:var(--orange); flex:none; }
+
+  .submit{
+    width:100%; padding:19px; background:var(--orange); color:#fff; border:none;
+    font-family:inherit; font-weight:700; font-size:13px; letter-spacing:.24em;
+    text-transform:uppercase; cursor:pointer; transition:background .25s ease, transform .2s ease;
+    display:inline-flex; align-items:center; justify-content:center; gap:12px;
+  }
+  .submit:hover{ background:#cf551f; transform:translateY(-2px); }
+  .submit svg{ width:18px; height:18px; }
+  .formnote{ text-align:center; font-size:11px; letter-spacing:.1em; color:var(--faint); margin-top:18px; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer{ padding:80px 0 50px; background:#061d23; text-align:center; }
+  footer .logo, .footer-logo{ margin:0 auto 24px; }
+  footer .meta{ font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--faint); }
+  footer .meta a{ color:var(--muted); }
+  footer .meta a:hover{ color:var(--orange-soft); }
+  footer .dev{
+    margin-top:40px; padding-top:30px; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  footer .dev span{ font-size:9.5px; letter-spacing:.34em; text-transform:uppercase; color:var(--faint); }
+  footer .dev img{ height:40px; width:auto; opacity:.9; transition:opacity .25s ease; }
+  footer .dev a:hover img{ opacity:1; }
+
+  /* ============================================================
+     RESPONSIVO
+     ============================================================ */
+  @media(max-width:760px){
+    .cards{ grid-template-columns:1fr; }
+    .steps{ grid-template-columns:1fr; gap:0; }
+    .step{ padding:30px 0; }
+    .step:not(:first-child){ border-top:1px solid var(--line); }
+    .grid2{ grid-template-columns:1fr; }
+    .vlabel{ display:none; }
+    .hero{ padding-top:90px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="imagens/hero.jpg">
+    <source src="imagens/hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-veil"></div>
+  <span class="vlabel l">Q&amp;A &nbsp;•&nbsp; Comunidade</span>
+  <span class="vlabel r">Comunidade &nbsp;•&nbsp; Corretores</span>
+
+  <div class="wrap">
+    <a class="logo-official hero-logo reveal" href="#" aria-label="Queiroz Azevedo Empreendimentos">
+      <img src="imagens/queiroz.png" alt="Queiroz Azevedo Empreendimentos" />
+    </a>
+
+    <p class="sub reveal">
+      Um <b>canal direto</b> pra que você, corretor, receba as
+      <b>novidades comerciais</b> em primeira mão.
+    </p>
+
+    <button class="cta reveal" onclick="document.getElementById('pre-inscricao').scrollIntoView()">
+      Quero fazer parte da comunidade
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <div class="scrollhint"><span>Role</span><i></i></div>
+</header>
+
+<!-- ===================== O QUE VOCÊ RECEBE ===================== -->
+<section class="offer">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow"><span class="dot">●</span> Dentro da comunidade</div>
+      <h2>O que circula aqui <b>primeiro</b>.</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">
+        <div class="num">01</div>
+        <h3>Próximos<br>lançamentos</h3>
+        <p>Você conhece os empreendimentos antes do mercado, tempo para se posicionar com o cliente certo.</p>
+      </div>
+      <div class="card reveal">
+        <div class="num">02</div>
+        <h3>Bastidores dos<br>nossos projetos</h3>
+        <p>Plantas, andamento de obra, condições comerciais e materiais de venda em primeira mão.</p>
+      </div>
+      <div class="card reveal">
+        <div class="num">03</div>
+        <h3>Novidades em<br>primeira mão</h3>
+        <p>Tabelas atualizadas, mudanças de condição e os movimentos comerciais que você precisa saber primeiro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMO FUNCIONA ===================== -->
+<section class="how">
+  <span class="vlabel l">Acesso restrito</span>
+  <div class="wrap">
+    <div class="head reveal">
+      <h2>O acesso é <b>restrito.</b></h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="n">01</div>
+        <h4>Preencha a pré-inscrição</h4>
+        <p>Leva menos de um minuto. Queremos entender o seu perfil de atuação.</p>
+      </div>
+      <div class="step reveal">
+        <div class="n">02</div>
+        <h4>Nossa equipe avalia</h4>
+        <p>Analisamos cada cadastro para manter a comunidade qualificada e relevante.</p>
+      </div>
+      <div class="step reveal">
+        <div class="n">03</div>
+        <h4>Link no WhatsApp</h4>
+        <p>Se aprovado, você recebe o convite da comunidade diretamente no seu WhatsApp.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== VÍDEO ===================== -->
+<section class="film">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow"><span class="dot">●</span> Assista</div>
+      <a class="logo-official film-logo" href="#" aria-label="Queiroz Azevedo Empreendimentos">
+        <img src="imagens/queiroz.png" alt="Queiroz Azevedo Empreendimentos" />
+      </a>
+    </div>
+    <div class="videobox reveal" data-id="ocBeoefqk_0" onclick="playVideo(this)">
+      <img src="https://i.ytimg.com/vi/ocBeoefqk_0/maxresdefault.jpg"
+           alt="Vídeo Queiroz Azevedo"
+           onerror="this.src='https://i.ytimg.com/vi/ocBeoefqk_0/hqdefault.jpg'" />
+      <div class="play"><i><svg viewBox="0 0 24 24" fill="#f4f2ea"><path d="M8 5v14l11-7z"/></svg></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FORMULÁRIO ===================== -->
+<section class="apply" id="pre-inscricao">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow"><span class="dot">●</span> Pré-inscrição</div>
+      <h2>Solicite seu <b>acesso</b>.</h2>
+      <p>Preencha os dados abaixo. Nossa equipe avalia seu perfil e, se aprovado, você recebe o link da comunidade no WhatsApp.</p>
+    </div>
+
+    <form id="form" class="reveal" novalidate>
+      <div class="field">
+        <label for="nome">Nome completo <span class="req">*</span></label>
+        <input id="nome" name="nome" type="text" placeholder="Seu nome" required />
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="whats">WhatsApp <span class="req">*</span></label>
+          <input id="whats" name="whats" type="tel" inputmode="tel" placeholder="(00) 00000-0000" required />
+        </div>
+        <div class="field">
+          <label for="instagram">Instagram <span class="req">*</span></label>
+          <input id="instagram" name="instagram" type="text" placeholder="@seuperfil" required />
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="cidade">Cidade onde atua <span class="req">*</span></label>
+          <input id="cidade" name="cidade" type="text" placeholder="Ex.: Maceió - AL" required />
+        </div>
+        <div class="field">
+          <label for="creci">CRECI <span class="req">*</span></label>
+          <input id="creci" name="creci" type="text" placeholder="Número / UF" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="perfil">Você já vende imóveis na região da Rota Ecológica dos Milagres? <span class="req">*</span></label>
+        <select id="perfil" name="perfil" required>
+          <option value="" disabled selected>Selecione</option>
+          <option>Sim, é a minha principal região</option>
+          <option>Às vezes / pontualmente</option>
+          <option>Ainda não, mas quero começar</option>
+        </select>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="consent" required />
+        <span>Autorizo a Queiroz Azevedo a entrar em contato pelo WhatsApp informado sobre a comunidade de corretores.</span>
+      </label>
+
+      <button type="submit" class="submit">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-5.6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-1.9-1.2 7.2 7.2 0 0 1-1.3-1.7c-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4 5.3 5.3 0 0 0 2.6.6 2.2 2.2 0 0 0 1.5-1 1.8 1.8 0 0 0 .1-1c-.1-.2-.2-.2-.4-.3z"/></svg>
+        Enviar pré-inscrição
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="meta">Rota Ecológica dos Milagres · Alagoas &nbsp;·&nbsp; Comunidade de Corretores</div>
+    <div class="dev">
+      <span>Desenvolvido por</span>
+      <a href="https://trilhaperformance.com.br" target="_blank" rel="noopener" aria-label="Trilha Performance Digital">
+        <img src="imagens/trilha.png" alt="Trilha Performance Digital" />
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ============================================================
+     CONFIG — cole aqui a URL do app do Google Apps Script
+     (publicado como "App da Web"). Veja o arquivo apps-script.gs
+     e o passo a passo que acompanha o projeto.
+     ============================================================ */
+  var GOOGLE_SCRIPT_URL = "COLE_AQUI_A_URL_DO_APPS_SCRIPT";
+
+  /* vídeo: carrega o player do YouTube só ao clicar */
+  function playVideo(box){
+    var id = box.getAttribute('data-id');
+    box.innerHTML =
+      '<iframe src="https://www.youtube.com/embed/' + id +
+      '?autoplay=1&rel=0&modestbranding=1" title="Vídeo Queiroz Azevedo" ' +
+      'allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+    box.style.cursor = 'default';
+  }
+
+  /* animações de entrada */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.15 });
+  document.querySelectorAll('.reveal').forEach(function(el,i){
+    el.style.transitionDelay = (i % 3) * 0.08 + 's';
+    io.observe(el);
+  });
+
+  /* envio do formulário -> registra a linha no Google Sheets (Apps Script) */
+  var form = document.getElementById('form');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+
+    var btn = form.querySelector('.submit');
+    var original = btn.innerHTML;
+    btn.disabled = true; btn.textContent = 'Enviando…';
+
+    var data = new FormData(form);
+    data.append('origem', 'landing-comunidade-corretores');
+
+    fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', body:data })
+      .then(function(){ sucesso(); })
+      .catch(function(){
+        // requisição enviada em no-cors normalmente resolve; só cai aqui em erro real de rede
+        btn.disabled = false; btn.innerHTML = original;
+        alert('Não foi possível enviar agora. Tente novamente em instantes.');
+      });
+  });
+
+  function sucesso(){
+    var box = document.getElementById('form');
+    box.innerHTML =
+      '<div style="text-align:center;padding:30px 0">' +
+        '<div style="width:64px;height:64px;border:1px solid var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 26px">' +
+          '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#e2662c" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>' +
+        '</div>' +
+        '<h3 style="font-weight:700;font-size:18px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px">Pré-inscrição recebida</h3>' +
+        '<p style="color:var(--muted);max-width:42ch;margin:0 auto;font-size:14px">Nossa equipe vai avaliar seu perfil. Se aprovado, você recebe o link da comunidade diretamente no WhatsApp informado. Fique de olho, resposta em até 48h úteis.</p>' +
+      '</div>';
+    box.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+</script>
+</body>
+</html>

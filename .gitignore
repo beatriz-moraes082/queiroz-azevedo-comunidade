@@ -1,0 +1,12 @@
+# arquivos-fonte grandes (não usados pelo site publicado)
+magnific_*.png
+magnific_*.jpeg
+SaveClip.App_*.mp4
+cascadia mono.zip
+queiroz azevedo - marca.pdf
+LOGOTIPO*Trilha.png
+
+# sistema / junk
+.DS_Store
+**/__MACOSX/
+.claude/
