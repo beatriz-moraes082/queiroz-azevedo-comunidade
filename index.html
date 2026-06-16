@@ -14,23 +14,13 @@
 <style>
   @font-face{
     font-family:'Cascadia Mono';
-    src:url('cascadia_mono/CascadiaMono-ExtraLight.ttf') format('truetype');
-    font-weight:200; font-style:normal; font-display:swap;
-  }
-  @font-face{
-    font-family:'Cascadia Mono';
-    src:url('cascadia_mono/CascadiaMono-Light.ttf') format('truetype');
+    src:url('cascadia_mono/CascadiaMono-Light.woff2') format('woff2');
     font-weight:300; font-style:normal; font-display:swap;
   }
   @font-face{
     font-family:'Cascadia Mono';
-    src:url('cascadia_mono/CascadiaMono-Bold.ttf') format('truetype');
+    src:url('cascadia_mono/CascadiaMono-Bold.woff2') format('woff2');
     font-weight:700; font-style:normal; font-display:swap;
-  }
-  @font-face{
-    font-family:'Cascadia Mono';
-    src:url('cascadia_mono/CascadiaMono-Italic.ttf') format('truetype');
-    font-weight:300; font-style:italic; font-display:swap;
   }
 
   /* ============================================================
@@ -124,10 +114,10 @@
   .hero-bg{
     position:absolute; inset:0; z-index:0;
     /* camadas (de cima p/ baixo): véu p/ legibilidade · FOTO · degradê de fallback.
-       Se imagens/hero.jpg não existir, a foto some e o degradê aparece. */
+       Se imagens/hero.webp não existir, a foto some e o degradê aparece. */
     background:
       linear-gradient(180deg, rgba(7,35,42,.45), rgba(7,35,42,.72)),
-      url('imagens/hero.jpg') center/cover no-repeat,
+      url('imagens/hero.webp') center/cover no-repeat,
       radial-gradient(120% 80% at 50% -10%, #2a6675 0%, #14454f 38%, #0a2c34 70%, #07232a 100%);
   }
   /* faixa de "horizonte / espuma" inferior */
@@ -165,7 +155,7 @@
   .hero h1 .o{ color:var(--orange-soft); font-weight:700; }
   .hero .sub{
     margin:0 auto; max-width:24ch; color:var(--paper);
-    font-weight:300; font-size:clamp(24px,3.8vw,40px); line-height:1.3; letter-spacing:.01em;
+    font-weight:300; font-size:clamp(19px,3vw,31px); line-height:1.35; letter-spacing:.01em;
   }
   .hero .sub b{ color:#fff; font-weight:700; }
   .hero .sub .o{ color:var(--orange-soft); font-weight:700; }
@@ -198,7 +188,7 @@
   }
   .film .head{ text-align:center; margin-bottom:54px; }
   .film .head .eyebrow{ justify-content:center; margin-bottom:22px; }
-  .film .head h2{ font-weight:300; font-size:clamp(20px,3vw,30px); letter-spacing:.04em; }
+  .film .head h2{ font-weight:300; font-size:clamp(17px,2.5vw,25px); letter-spacing:.04em; }
   .film .head h2 b{ font-weight:700; }
   .film-logo{ margin-top:6px; }
   .film-logo svg{ width:54px; height:48px; }
@@ -229,13 +219,13 @@
     position:relative; padding:110px 0;
     background:
       linear-gradient(180deg, rgba(7,35,42,.86), rgba(10,44,52,.92)),
-      url('imagens/projeto.jpg') center/cover no-repeat,
+      url('imagens/projeto.webp') center/cover no-repeat,
       linear-gradient(180deg, #07232a 0%, #0c333b 55%, #0a2c34 100%);
   }
   .offer .head{ text-align:center; margin-bottom:64px; }
   .offer .head .eyebrow{ justify-content:center; margin-bottom:22px; }
   .offer .head h2{
-    font-weight:300; font-size:clamp(20px,3vw,30px); letter-spacing:.04em;
+    font-weight:300; font-size:clamp(17px,2.5vw,25px); letter-spacing:.04em;
   }
   .offer .head h2 b{ font-weight:700; }
 
@@ -243,8 +233,8 @@
   .card{ background:var(--ink); padding:42px 32px; min-height:240px; display:flex; flex-direction:column; transition:background .35s ease; }
   .card:hover{ background:#10404a; }
   .card .num{ font-size:12px; letter-spacing:.3em; color:var(--orange); margin-bottom:auto; }
-  .card h3{ font-weight:700; font-size:16px; letter-spacing:.12em; text-transform:uppercase; line-height:1.5; margin:34px 0 12px; }
-  .card p{ font-size:13.5px; color:var(--muted); }
+  .card h3{ font-weight:700; font-size:14px; letter-spacing:.12em; text-transform:uppercase; line-height:1.5; margin:34px 0 12px; }
+  .card p{ font-size:12.5px; color:var(--muted); }
 
   /* ============================================================
      SEÇÃO: COMO FUNCIONA / RESTRITO
@@ -253,19 +243,19 @@
     position:relative; padding:120px 0; overflow:hidden;
     background:
       linear-gradient(180deg, rgba(8,40,47,.80), rgba(7,35,42,.90)),
-      url('imagens/mar.jpg') center/cover no-repeat,
+      url('imagens/mar.webp') center/cover no-repeat,
       radial-gradient(120% 90% at 50% 0%, #1a5560 0%, #0e3a43 55%, #07232a 100%);
   }
   .how .head{ text-align:center; max-width:54ch; margin:0 auto 70px; }
-  .how .head h2{ font-weight:300; font-size:clamp(22px,3.4vw,34px); letter-spacing:.06em; line-height:1.35; text-transform:uppercase; }
+  .how .head h2{ font-weight:300; font-size:clamp(18px,2.8vw,28px); letter-spacing:.06em; line-height:1.35; text-transform:uppercase; }
   .how .head h2 b{ font-weight:700; }
-  .how .head p{ margin-top:24px; color:var(--muted); font-size:15px; }
+  .how .head p{ margin-top:24px; color:var(--muted); font-size:13px; }
 
   .steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; counter-reset:s; }
   .step{ position:relative; padding-top:30px; border-top:1px solid var(--line); }
   .step .n{ font-weight:700; font-size:13px; letter-spacing:.3em; color:var(--orange); }
-  .step h4{ font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase; margin:18px 0 10px; }
-  .step p{ color:var(--muted); font-size:13.5px; }
+  .step h4{ font-weight:700; font-size:13px; letter-spacing:.08em; text-transform:uppercase; margin:18px 0 10px; }
+  .step p{ color:var(--muted); font-size:12.5px; }
 
   .scarcity{
     margin-top:70px; text-align:center; font-size:12px; letter-spacing:.34em;
@@ -279,9 +269,9 @@
   .apply{ position:relative; padding:120px 0 0; background:linear-gradient(180deg,#07232a,#061d23); }
   .apply .head{ text-align:center; margin-bottom:54px; }
   .apply .head .eyebrow{ justify-content:center; margin-bottom:22px; }
-  .apply .head h2{ font-weight:300; font-size:clamp(22px,3.2vw,32px); letter-spacing:.04em; }
+  .apply .head h2{ font-weight:300; font-size:clamp(18px,2.7vw,27px); letter-spacing:.04em; }
   .apply .head h2 b{ font-weight:700; }
-  .apply .head p{ margin-top:18px; color:var(--muted); font-size:14px; max-width:46ch; margin-inline:auto; }
+  .apply .head p{ margin-top:18px; color:var(--muted); font-size:13px; max-width:46ch; margin-inline:auto; }
 
   form{ max-width:640px; margin:0 auto; }
   .field{ margin-bottom:26px; }
@@ -289,7 +279,7 @@
   .field label .req{ color:var(--orange); }
   .field input, .field select, .field textarea{
     width:100%; background:transparent; border:1px solid var(--line);
-    color:var(--paper); font-family:inherit; font-size:15px; font-weight:300;
+    color:var(--paper); font-family:inherit; font-size:14px; font-weight:300;
     padding:15px 16px; transition:border-color .25s ease, background .25s ease;
   }
   .field textarea{ resize:vertical; min-height:96px; }
@@ -349,7 +339,7 @@
 <!-- ===================== HERO ===================== -->
 <header class="hero">
   <div class="hero-bg"></div>
-  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="imagens/hero.jpg">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="imagens/hero.webp">
     <source src="imagens/hero.mp4" type="video/mp4" />
   </video>
   <div class="hero-veil"></div>
